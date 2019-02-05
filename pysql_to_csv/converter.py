@@ -1,5 +1,6 @@
 import mysql.connector
 from mysql.connector import errorcode
+from pysql_to_csv.csv_writer import CSVWriter
 
 class Converter(object):
     def __init__(self, options):
@@ -15,7 +16,7 @@ class Converter(object):
                 passwd=self.__options.passwd,
                 database=self.__options.db
             )
-            print("Connection Established {}".format(cnx))
+            print("Connection Established Successfully!")
             return cnx
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
@@ -29,8 +30,12 @@ class Converter(object):
         query = "SELECT * FROM " + self.__options.tblname
         self.cur.execute(query)
 
+        field_names = [i[0] for i in self.cur.description]
+        csv = CSVWriter(self.__options.tblname+".csv")
+        csv.write_header(field_names)
         for row in self.cur:
-            print(list(row))
+            csv.write_row(row)
+        print("Successfully Converted table {} to csv".format(self.__options.tblname+".sql"))
 
     def __del__(self):
         self.conn.close()
