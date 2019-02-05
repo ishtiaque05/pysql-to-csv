@@ -9,7 +9,7 @@ setup(
 		test_suite="tests",
 		entry_points={
 			'console_scripts': [
-				'pysql-to-csv=pysql_to_csv.__main__:main'
+				'pysql-to-csv=pysql_to_csv:runner'
 			]
 		}
 	)
