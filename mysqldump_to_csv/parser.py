@@ -37,8 +37,7 @@ class Parser(object):
     def is_target_file_initialized(self):
         return self.__target != None           
 
-    def get_values(self, line):
-        values = line.strip().replace('NULL', "''")
+    def get_values(self, values):
         values = values[:-1]
         values = list(ast.literal_eval(values))
         return values
@@ -47,7 +46,7 @@ class Parser(object):
         if(self.is_writer_set() and self.is_target_file_initialized()):
             self.__writer.writerow(data)     
 
-    def parse(self, output_directory):
+    def parse(self):
         is_insert = False
         with open(self.__options.filename, 'r') as read_file:
             for line in read_file:
@@ -57,6 +56,9 @@ class Parser(object):
                     if headers:
                         self.write_data(headers)
                 elif(is_insert):
-                    data = self.get_values(line)
+                    values = line.strip().replace('NULL', "''")
+                    if (values[-1] == ';'):
+                        is_insert = False
+                    data = self.get_values(values)
                     self.write_data(data)
 

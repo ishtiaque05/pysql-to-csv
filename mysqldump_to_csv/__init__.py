@@ -14,6 +14,4 @@ def cli():
 def runner():
     args = cli()
     parser = Parser(args)
-    parser.parse("abc")
-    # converter = Converter(args)
-    # converter.execute_query()
+    parser.parse()
