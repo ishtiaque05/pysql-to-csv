@@ -1,6 +1,6 @@
 ### To install the plugin from master branch
 
-`pip install git+https://github.com/ishtiaque05/pysql-to-csv.git-master` 
+`pip install git+https://github.com/ishtiaque05/pysql-to-csv.git` 
 
 ### To clone and install locally
 cd into the repo directory:
